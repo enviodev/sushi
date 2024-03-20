@@ -7,8 +7,8 @@ import {
 } from "../generated/src/Handlers.gen";
 
 import {
-  UniswapV3Factory,
-  UniswapV3Pool,
+  UniswapV3Factory_PoolCreatedEntity,
+  UniswapV3Pool_SwapEntity,
   EventsSummaryEntity,
 } from "../generated/src/Types.gen";
 
@@ -36,16 +36,16 @@ UniswapV3FactoryContract.PoolCreated.handler(({ event, context }) => {
       currentSummaryEntity.uniswapV3Factory_PoolCreatedCount + BigInt(1),
   };
 
-  const uniswapV3Factory_PoolCreatedEntity: UniswapV3Factory.PoolCreatedEntity =
-    {
-      id: event.transactionHash + event.logIndex.toString(),
-      token0: event.params.token0,
-      token1: event.params.token1,
-      fee: event.params.fee,
-      tickSpacing: event.params.tickSpacing,
-      pool: event.params.pool,
-      eventsSummary: GLOBAL_EVENTS_SUMMARY_KEY,
-    };
+  const uniswapV3Factory_PoolCreatedEntity: UniswapV3Factory_PoolCreatedEntity =
+  {
+    id: event.transactionHash + event.logIndex.toString(),
+    token0: event.params.token0,
+    token1: event.params.token1,
+    fee: event.params.fee,
+    tickSpacing: event.params.tickSpacing,
+    pool: event.params.pool,
+    eventsSummary: GLOBAL_EVENTS_SUMMARY_KEY,
+  };
 
   context.EventsSummary.set(nextSummaryEntity);
   context.UniswapV3Factory_PoolCreated.set(uniswapV3Factory_PoolCreatedEntity);
@@ -66,7 +66,7 @@ UniswapV3PoolContract.Swap.handler(({ event, context }) => {
       currentSummaryEntity.uniswapV3Pool_SwapCount + BigInt(1),
   };
 
-  const uniswapV3Pool_SwapEntity: UniswapV3Pool.SwapEntity = {
+  const uniswapV3Pool_SwapEntity: UniswapV3Pool_SwapEntity = {
     id: event.transactionHash + event.logIndex.toString(),
     sender: event.params.sender,
     recipient: event.params.recipient,
